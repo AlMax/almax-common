@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='almax_common',
-    version='0.2.0',
+    version='0.3.0',
     description='A common library with some of my implementations',
     author='AlMax98',
     author_email='alihaider.maqsood@gmail.com',
