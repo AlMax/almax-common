@@ -122,3 +122,13 @@ def TimeToString(time: datetime) -> str:
     hours = minutes // 60;
     days = hours // 24;
     return f"{round(days)} Days = {round(hours)} Hours = {round(minutes)} Minutes = {round(seconds, 2)} Seconds";
+
+def CheckStringInFile(file_path, target_string):
+    try:
+        with open(file_path, 'r') as file:
+            for line in file:
+                if target_string in line:
+                    return True;
+        return False;
+    except FileNotFoundError:
+        return False;

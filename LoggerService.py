@@ -4,24 +4,24 @@ import Utils;
 import os;
 
 class LoggerService:
-    def __init__(self, programName: str, details: str, generiLogFile: str = "0_ExecutionLog", addTimeFolder: bool = True, logFormat: str = '%(asctime)s - %(message)s'):
-        self.__ProgramName = programName;
-        self.__LogPath = f"{self.__ProgramName.replace(' ', '_')}_Log/{details}";
+    def __init__(self, programNameLogger: str, details: str = '', genericLogFileName: str = "__0.ExecutionLog.log", addTimeFolder: bool = True, logFormat: str = '%(asctime)s - %(message)s', absoluteLogPath: str = ''):
+        self.__LogPath = f"{absoluteLogPath}{programNameLogger}{details}";
        
         #if os.path.exists(self.__LogPath):
         #    raise FileExistsError("Duplicate Executions are Denied!");
         #else:
         if addTimeFolder:
             self.__LogPath += "/" + datetime.now().strftime("%Y%m%d_%H%M%S");
-        os.makedirs(self.__LogPath);
+        if not (os.path.exists(self.__LogPath)):
+            os.makedirs(self.__LogPath);
        
-        self.__Istance = logging; #.getLogger(self.__LogPath);
-        self.__Istance.basicConfig(
-            filename = f"{self.__LogPath}/{generiLogFile}.log",
-            level = logging.INFO,
-            format = logFormat
-        );
-        self.__Istance.info(f"{self.__ProgramName} START");
+        self.__Istance = logging.getLogger(programNameLogger + details);
+        self.file_handler = logging.FileHandler(filename=f"{self.__LogPath}/{genericLogFileName}", mode='a');
+        self.formatter = logging.Formatter(logFormat);
+        self.file_handler.setFormatter(self.formatter);
+        self.__Istance.addHandler(self.file_handler);
+        self.__Istance.setLevel(logging.INFO);
+       
    
         self.__CustomTimer = datetime.now();
         self.__Timer = datetime.now();
@@ -41,11 +41,14 @@ class LoggerService:
 
     def ForceEnd(self):
         self.__Istance.info(f"Total Duration: {Utils.TimeToString(Utils.CalculateTime(self.__Timer))}");
-        self.__Istance.info(f"{self.__ProgramName} FORCED END\n\n");
+        self.__Istance.info(f"FORCED END\n\n");
+
+    def Start(self):
+        self.__Istance.info(f"START");
 
     def End(self):
         self.__Istance.info(f"Total Duration: {Utils.TimeToString(Utils.CalculateTime(self.__Timer))}");
-        self.__Istance.info(f"{self.__ProgramName} END\n\n");
+        self.__Istance.info(f"END\n\n");
 
     def LogPath(self) -> str:
         return self.__LogPath;
