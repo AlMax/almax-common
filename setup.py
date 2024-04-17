@@ -18,5 +18,5 @@ setup(
         'datetime',
         'os',
         'sys'
-    ]
+    ],
 );
