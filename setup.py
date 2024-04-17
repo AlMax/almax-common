@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='almax_common',
-    version='0.5.0',
+    version='0.6.0',
     description='A common library with some of my implementations',
     long_description='test',
     long_description_content_type='text/markdown',
