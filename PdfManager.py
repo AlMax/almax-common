@@ -101,7 +101,7 @@ def GeneratePdf(client_info, orders):
             ]
         ];
         for order in orders:
-            body_table_data.append(order.ToParagraph_ForTable());
+            body_table_data.append(ToParagraph_ForTable(order.Description, order.Quantity, order.Price, order.Total));
 
         body_table_style = TableStyle([
             ('BACKGROUND', (0, 0), (-1, 0), colors.whitesmoke),
@@ -128,3 +128,29 @@ def GeneratePdf(client_info, orders):
         print(f'PDF generated successfully at: {file_path}');
     except Exception as e:
         print(f'Error generating PDF: {e}');
+
+
+def ToParagraph_ForTable(Description, Quantity, Price, Total):
+    style = ParagraphStyle(
+        name="Centered",
+        parent=getSampleStyleSheet()['Normal'],
+        fontName='Times-Roman',
+        alignment=1 # 0=left, 1=center, 2=right
+    );
+    return [
+        Paragraph(
+            f"{Description}"
+        ),
+        Paragraph(
+            f"{Quantity}", 
+            style
+        ),
+        Paragraph(
+            f"{Price}€", 
+            style
+        ),
+        Paragraph(
+            f"{Total}€", 
+            style
+        )
+    ];
