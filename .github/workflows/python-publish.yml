@@ -25,7 +25,8 @@ jobs:
       - name: Build Source and Wheel Distributions
         run: |
           python setup.py sdist bdist_wheel
+          twine upload dist/*
       - name: Publish Distribution to PyPI
-        uses: twine upload dist/*
+        uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
