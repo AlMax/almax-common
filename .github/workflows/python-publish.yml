@@ -38,5 +38,8 @@ jobs:
     - name: Publish distribution 📦 to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
-        user: __token__
+        user: AlMax98
         password: ${{ secrets.PYPI_API_TOKEN }}
+        permissions:
+        contents: read
+        id-token: write
