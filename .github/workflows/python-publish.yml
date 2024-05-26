@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - development
-
+      
 jobs:
   build-n-publish:
     name: Build and publish Python 🐍 distributions 📦 to PyPI
@@ -18,14 +18,15 @@ jobs:
       with:
         python-version: 3.12
     - name: Install pip
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install setuptools wheel twine
-    - name: Build and publish
-      env:
-        TWINE_USERNAME: __token__
-        TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-      run: |
-        python setup.py sdist bdist_wheel
-        twine upload dist/*
+      run: python -m pip install --upgrade pip
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+    - name: Install build
+      run: python -m pip install build
+    - name: Build a binary wheel and a source tarball
+      run: python -m build --sdist --wheel --outdir dist/
+    - name: Publish distribution 📦 to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        user: __token__
+        password: ${{ secrets.development.PYPI_API_TOKEN }}
