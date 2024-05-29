@@ -1,8 +1,0 @@
-tkinter
-logging
-subprocess
-reportlab
-threading
-datetime
-os
-sys
