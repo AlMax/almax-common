@@ -15,14 +15,5 @@ setup(
     author='AlMax98',
     author_email='alihaider.maqsood@gmail.com',
     packages=find_packages(),
-    install_requires=[
-        'tkinter',
-        'logging',
-        'subprocess',
-        'reportlab',
-        'threading',
-        'datetime',
-        'os',
-        'sys'
-    ],
+    install_requires=[],
 );
