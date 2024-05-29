@@ -16,5 +16,5 @@ setup(
     author_email='alihaider.maqsood@gmail.com',
     packages=find_packages(),
     install_requires=[],
-    py_modules=['__init__.py', 'Utils.py']
+    py_modules=['Utils.py']
 );
