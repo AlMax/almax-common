@@ -1,6 +1,6 @@
 import logging;
 from datetime import datetime;
-import Utils;
+import Common.Utils as Utils;
 import os;
 
 class LoggerService:

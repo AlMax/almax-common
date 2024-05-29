@@ -1,4 +1,4 @@
-import Utils;
+import Common.Utils as Utils;
 import os;
 
 from reportlab.lib.pagesizes import A4;
