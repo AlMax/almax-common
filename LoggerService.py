@@ -1,6 +1,6 @@
 import logging;
 from datetime import datetime;
-import Common.Utils as Utils;
+import Utils.Generic as Generic;
 import os;
 
 class LoggerService:
@@ -34,20 +34,20 @@ class LoggerService:
         self.__CustomTimer = datetime.now();
 
     def EndTiming(self):
-        self.__Istance.info(f"\tDuration: {Utils.TimeToString(Utils.CalculateTime(self.__CustomTimer))}");
+        self.__Istance.info(f"\tDuration: {Generic.TimeToString(Generic.CalculateTime(self.__CustomTimer))}");
    
     def StartGenericTiming(self):
         self.__Timer = datetime.now();
 
     def ForceEnd(self):
-        self.__Istance.info(f"Total Duration: {Utils.TimeToString(Utils.CalculateTime(self.__Timer))}");
+        self.__Istance.info(f"Total Duration: {Generic.TimeToString(Generic.CalculateTime(self.__Timer))}");
         self.__Istance.info(f"FORCED END\n\n");
 
     def Start(self):
         self.__Istance.info(f"START");
 
     def End(self):
-        self.__Istance.info(f"Total Duration: {Utils.TimeToString(Utils.CalculateTime(self.__Timer))}");
+        self.__Istance.info(f"Total Duration: {Generic.TimeToString(Generic.CalculateTime(self.__Timer))}");
         self.__Istance.info(f"END\n\n");
 
     def LogPath(self) -> str:

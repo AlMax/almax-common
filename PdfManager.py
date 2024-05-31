@@ -1,4 +1,4 @@
-import Common.Utils as Utils;
+import Utils.Generic as Generic;
 import os;
 
 from reportlab.lib.pagesizes import A4;
@@ -8,7 +8,7 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, Tabl
 
 def GeneratePdf(client_info, orders):
     try:
-        now = Utils.now();
+        now = Generic.now();
         now_month = now.month if now.month > 9 else f"0{now.month}";
         now_day = now.day if now.day > 9 else f"0{now.day}";
         now_hour = now.hour if now.hour > 9 else f"0{now.hour}";
