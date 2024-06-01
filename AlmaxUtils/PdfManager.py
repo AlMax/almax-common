@@ -1,5 +1,6 @@
 import AlmaxUtils.Generic as Generic;
 import os;
+import PyPDF2;
 
 from reportlab.lib.pagesizes import A4;
 from reportlab.lib import colors;
@@ -154,3 +155,51 @@ def ToParagraph_ForTable(Description, Quantity, Price, Total):
             style
         )
     ];
+
+
+def DivideAndMergePages(pdf_vecchio, indici_pagine, directorySalvataggio, nomeFile):
+    """ - DA RISCRIVERE - La funzione usa la libreria PyPDF2 e si occupa di strarre le singole pagine da un dato PDF.
+    pdf_vecchio è il reader, generalmente dichiarato come pdfReader = PyPDF2.PdfFileReader(pdfFileObj)
+    indici_pagine è la posizione delle pagine specifiche da estrarre; può essere un singolo indice o più di uno; in case fossero tanti, è strettamente necessario sia un array
+    directorySalvataggio è il nome della cartella in cui salvare il/i file_estratto
+    nomeFile è il nome che verrà assegnato al PDF contenente le pagine divise."""
+
+    file_da_scrivere = PyPDF2.PdfFileWriter()
+
+    if isinstance(indici_pagine,list):
+        for i in indici_pagine:
+            file_da_scrivere.addPage(pdf_vecchio.getPage(i))
+    else:
+        file_da_scrivere.addPage(pdf_vecchio.getPage(indici_pagine))
+
+    #Metto ogni file diviso nell'apposita cartella
+    with open(directorySalvataggio + "/" + nomeFile, "wb") as file_estratto:
+        file_da_scrivere.write(file_estratto)
+
+
+def MergePDFs(nome_pdf1, nome_pdf2, directorySalvataggio):
+    #Lettura PDF
+    #nomePDF = simpledialog.askstring(title=nomeProgramma, prompt="Inserire il nome del file PDF senza l'estensione.\nEsempio: se il file si chiama 'test.pdf', basterà inserire 'test'")
+    pdfFileObj_1 = open(directorySalvataggio + "/" + nome_pdf1+".pdf", 'rb')
+    pdfReader_1 = PyPDF2.PdfFileReader(pdfFileObj_1)
+    #print("unisci Ok1" + directorySalvataggio + "/" + nome_pdf2+".pdf")
+    pdfFileObj_2 = open(directorySalvataggio + "/" + nome_pdf2+".pdf", 'rb')
+    pdfReader_2 = PyPDF2.PdfFileReader(pdfFileObj_2)
+    #print("unisci Ok2")
+    numPagine1 = pdfReader_1.numPages
+    numPagine2 = pdfReader_2.numPages
+
+    pdf_unito = PyPDF2.PdfFileWriter()
+    for i in range(numPagine1):
+        pdf_unito.addPage(pdfReader_1.getPage(i))
+    for i in range(numPagine2):
+        pdf_unito.addPage(pdfReader_2.getPage(i))
+
+    with open(directorySalvataggio + "/pdfUnito.pdf", "wb") as file_da_scrivere:
+        pdf_unito.write(file_da_scrivere)
+
+    pdfFileObj_1.close()
+    pdfFileObj_2.close()
+    os.remove(directorySalvataggio + "/" + nome_pdf1+".pdf")
+    os.remove(directorySalvataggio + "/" + nome_pdf2+".pdf")
+    os.rename(directorySalvataggio + "/pdfUnito.pdf", directorySalvataggio + "/" + nome_pdf1+".pdf")

@@ -1,3 +1,5 @@
+import codicefiscale as CFLib;
+
 def PrintBytes(size: int) -> str:
     if size > 1024:
         size = round(size / 1024, 2);
@@ -34,3 +36,24 @@ def ReadFile(file_path: str) -> list:
     with open(file_path, 'r') as file:
         lines = file.readlines();
     return lines;
+
+def isCodiceFiscale(parola):
+    """Data in input una stringa, viene analizzata la composizione della stringa per determinare se è un codice fiscale o meno.
+    Ritorna True in caso sia un codice fiscale, False altrimenti. """
+    trovato = False,parola
+    if len(parola) > 16:
+
+        trovato = isCodiceFiscale(parola[0:16])
+        if trovato[0]:
+            return True,parola[0:16]
+
+        trovato = isCodiceFiscale(parola[-16:])
+        if trovato[0]:
+            return True,parola[-16:]
+        return False,parola
+
+    if len(parola) == 16:
+        if ( (not parola[0:6].isnumeric()) and (parola[6:8].isnumeric()) and (not parola[8].isnumeric()) and (parola[9:11].isnumeric()) and (not parola[15].isnumeric()) ):
+            return CFLib.isvalid(parola),parola
+        return False,parola
+    return trovato;
