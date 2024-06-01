@@ -66,7 +66,7 @@ jobs:
           TWINE_PASSWORD: ${{ env.PyPiToken }}
         run: |
           pip install twine
-          twine upload dist/*
+          twine upload dist/* --verbose
 
   Publish-Dev:
     name: Publish on PyPi Dev-version
@@ -90,4 +90,4 @@ jobs:
           TWINE_PASSWORD: ${{ env.PyPiToken }}
         run: |
           pip install twine
-          twine upload dist/*
+          twine upload dist/* --verbose
