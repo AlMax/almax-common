@@ -1,7 +1,7 @@
 name: Build & Upload Python Package
 
 env:
-  Version: "1.0.1"
+  Version: "1.0.2"
   PyPiToken: ${{ secrets.PYPI_API_TOKEN }}
   PythonVersion: 3.12
 
@@ -27,7 +27,7 @@ jobs:
         id: generate_version
         run: |
           if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-            VERSION="${{ env.Version }}$(date +'%Y%m%d%H%M%S')"
+            VERSION="${{ env.Version }}"
           else
             VERSION="${{ env.Version }}.dev$(date +'%Y%m%d%H%M%S')"
           fi
@@ -45,7 +45,7 @@ jobs:
           path: dist/
 
   Publish-Prod:
-    name: Publish on PyPi
+    name: Publish on PyPi Prod-version
     runs-on: ubuntu-latest
     needs: Install-Build
     if: github.ref == 'refs/heads/main'
@@ -69,7 +69,7 @@ jobs:
           twine upload dist/*
 
   Publish-Dev:
-    name: Publish on PyPi Test
+    name: Publish on PyPi Dev-version
     runs-on: ubuntu-latest
     needs: Install-Build
     if: github.ref == 'refs/heads/development'
