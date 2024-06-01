@@ -2,7 +2,7 @@ from datetime import datetime, timedelta;
 
 now = datetime.now();
 
-def CalculateTime(start: datetime):
+def CalculateTimePassed(start: datetime = 0):
     return datetime.now() - start;
 
 def TimeToString(time: datetime) -> str:

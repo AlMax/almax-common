@@ -1,6 +1,6 @@
 import AlmaxUtils.Time as TimeLib;
 import os;
-import PyPDF2;
+import pypdf;
 
 from reportlab.lib.pagesizes import A4;
 from reportlab.lib import colors;
@@ -9,7 +9,7 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, Tabl
 
 def GeneratePdf(client_info, orders):
     try:
-        now = TimeLib.now();
+        now = TimeLib.now;
         now_month = now.month if now.month > 9 else f"0{now.month}";
         now_day = now.day if now.day > 9 else f"0{now.day}";
         now_hour = now.hour if now.hour > 9 else f"0{now.hour}";
@@ -20,7 +20,7 @@ def GeneratePdf(client_info, orders):
         if not os.path.exists(file_path):
             os.makedirs(file_path);
         file_path = f"{file_path}/{now_day}_{now_hour}{now_minute}{now_second}.pdf";
-        file_path = "test.pdf";
+        #file_path = "test.pdf";
 
         size_societyName = 25;
         margin = 10;
@@ -102,7 +102,7 @@ def GeneratePdf(client_info, orders):
             ]
         ];
         for order in orders:
-            body_table_data.append(ToParagraph_ForTable(order.Description, order.Quantity, order.Price, order.Total));
+            body_table_data.append(ToParagraph_ForTable(order['Description'], order['Quantity'], order['Price'], order['Total']));
 
         body_table_style = TableStyle([
             ('BACKGROUND', (0, 0), (-1, 0), colors.whitesmoke),
@@ -164,7 +164,7 @@ def DivideAndMergePages(pdf_vecchio, indici_pagine, directorySalvataggio, nomeFi
     directorySalvataggio è il nome della cartella in cui salvare il/i file_estratto
     nomeFile è il nome che verrà assegnato al PDF contenente le pagine divise."""
 
-    file_da_scrivere = PyPDF2.PdfFileWriter()
+    file_da_scrivere = pypdf.PdfFileWriter()
 
     if isinstance(indici_pagine,list):
         for i in indici_pagine:
@@ -181,15 +181,15 @@ def MergePDFs(nome_pdf1, nome_pdf2, directorySalvataggio):
     #Lettura PDF
     #nomePDF = simpledialog.askstring(title=nomeProgramma, prompt="Inserire il nome del file PDF senza l'estensione.\nEsempio: se il file si chiama 'test.pdf', basterà inserire 'test'")
     pdfFileObj_1 = open(directorySalvataggio + "/" + nome_pdf1+".pdf", 'rb')
-    pdfReader_1 = PyPDF2.PdfFileReader(pdfFileObj_1)
+    pdfReader_1 = pypdf.PdfFileReader(pdfFileObj_1)
     #print("unisci Ok1" + directorySalvataggio + "/" + nome_pdf2+".pdf")
     pdfFileObj_2 = open(directorySalvataggio + "/" + nome_pdf2+".pdf", 'rb')
-    pdfReader_2 = PyPDF2.PdfFileReader(pdfFileObj_2)
+    pdfReader_2 = pypdf.PdfFileReader(pdfFileObj_2)
     #print("unisci Ok2")
     numPagine1 = pdfReader_1.numPages
     numPagine2 = pdfReader_2.numPages
 
-    pdf_unito = PyPDF2.PdfFileWriter()
+    pdf_unito = pypdf.PdfFileWriter()
     for i in range(numPagine1):
         pdf_unito.addPage(pdfReader_1.getPage(i))
     for i in range(numPagine2):
