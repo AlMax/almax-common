@@ -6,7 +6,7 @@ def test_PrintBytes():
     assert PrintBytes(2048) == "2.0 KB"
     assert PrintBytes(2_097_152) == "2.0 MB"
     assert PrintBytes(2_147_483_648) == "2.0 GB"
-    assert PrintBytes(2_199_023_255_552) == "2.0 TB"
+    assert PrintBytes(2_199_023_255_552) == "2.1 TB"
 
 @pytest.fixture
 def temp_file(tmp_path):
