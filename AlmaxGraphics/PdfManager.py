@@ -1,4 +1,4 @@
-import Utils.Generic as Generic;
+import AlmaxUtils.Generic as Generic;
 import os;
 
 from reportlab.lib.pagesizes import A4;
