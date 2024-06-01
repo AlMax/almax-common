@@ -1,7 +1,7 @@
 name: Build & Upload Python Package
 
 env:
-  Version: "1.0.4"
+  Version: "1.0.5"
   PyPiToken: ${{ secrets.PYPI_API_TOKEN }}
   PythonVersion: 3.12
 
@@ -21,8 +21,10 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PythonVersion }}
-      - name: Install pip
-        run: python -m pip install --upgrade pip
+      - name: Install pip and dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
       - name: Generate version
         id: generate_version
         run: |
@@ -60,6 +62,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install pytest
+          pip install -r requirements.txt
       - name: Install built package
         run: |
           pip install dist/*.whl

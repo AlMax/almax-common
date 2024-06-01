@@ -3,6 +3,9 @@ from setuptools import setup, find_packages;
 with open("README.md", "r") as fh:
     readMe = fh.read();
 
+with open("requirements.txt") as f:
+    required = f.read().splitlines();
+
 with open("version.txt", "r") as fh:
     versionFile = fh.read().strip();
 
@@ -15,5 +18,6 @@ setup(
     author='AlMax98',
     author_email='alihaider.maqsood@gmail.com',
     packages=find_packages(),
-    package_dir={'': '.'}
+    package_dir={'': '.'},
+    install_requires=required,
 );
