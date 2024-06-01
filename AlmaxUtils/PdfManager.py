@@ -104,7 +104,8 @@ def GeneratePdf(client_info, cls, orders):
         for order in orders:
             attributes = [];
             for attribute in dir(order):
-                attributes.append(attribute);
+                if not attribute.startswith("__") and not callable(getattr(order, attribute)):
+                    attributes.append(getattr(order, attribute));
             body_table_data.append(
                 ToParagraph_ForTable(
                     attributes
