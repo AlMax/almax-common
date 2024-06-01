@@ -8,7 +8,7 @@ with open("requirements.txt") as f:
 
 setup(
     name='almax_common',
-    version='0.10.1',
+    version='0.10.2',
     description='A common library with some of my implementations',
     long_description=readMe,
     long_description_content_type='text/markdown',
