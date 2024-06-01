@@ -56,7 +56,7 @@ pyzmq==26.0.3
 readme_renderer==43.0
 referencing==0.35.1
 reportlab==4.1.0
-requests==2.31.0
+requests==2.32.0
 requests-toolbelt==1.0.0
 rfc3986==2.0.0
 rich==13.7.1
