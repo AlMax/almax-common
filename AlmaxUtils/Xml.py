@@ -1,5 +1,5 @@
 from lxml import etree;
-from Classes.Result import *;
+from AlmaxClasses.Result import *;
 
 def XML_ValidateXSD(xml_path: str, xsd_path: str) -> Result:
     with open(xsd_path, 'r') as schema_file:

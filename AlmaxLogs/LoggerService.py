@@ -1,6 +1,6 @@
 import logging;
 from datetime import datetime;
-import Utils.Generic as Generic;
+import AlmaxUtils.Generic as Generic;
 import os;
 
 class LoggerService:
