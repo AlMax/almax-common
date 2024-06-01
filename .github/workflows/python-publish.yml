@@ -1,12 +1,12 @@
-name: Upload Python Package
+name: Build & Upload Python Package
+
+env:
+  PyPiToken: ${{ secrets.PYPI_API_TOKEN }}
 
 on:
   push:
     branches:
       - development
-      
-env:
-  PyPiToken: ${{ secrets.PYPI_API_TOKEN }}
 
 jobs:
   Install-Build:
@@ -47,7 +47,10 @@ jobs:
           name: dist
           path: dist/
       - name: Publish distribution to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1.8
-        with:
-          user: __token__
-          password: ${{ env.PyPiToken }}
+        env:
+          TWINE_REPOSITORY_URL: https://upload.pypi.org/legacy/
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}  # This will be used as a fallback for token
+        run: |
+          pip install twine
+          twine upload dist/*
