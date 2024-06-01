@@ -70,7 +70,7 @@ jobs:
         run: pytest tests/
 
   Publish-Prod:
-    name: Publish on PyPi Prod-version
+    name: Publish on PyPi - Prod
     runs-on: ubuntu-latest
     needs: Tests
     if: github.ref == 'refs/heads/main'
@@ -94,7 +94,7 @@ jobs:
           twine upload dist/* --verbose
 
   Publish-Dev:
-    name: Publish on PyPi Dev-version
+    name: Publish on PyPi - Dev
     runs-on: ubuntu-latest
     needs: Tests
     if: github.ref == 'refs/heads/development'
