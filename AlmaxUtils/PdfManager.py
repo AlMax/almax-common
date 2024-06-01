@@ -7,7 +7,7 @@ from reportlab.lib import colors;
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle;
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle;
 
-def GeneratePdf(client_info, orders):
+def GeneratePdf(client_info, cls, orders):
     try:
         now = TimeLib.now;
         now_month = now.month if now.month > 9 else f"0{now.month}";
@@ -102,7 +102,14 @@ def GeneratePdf(client_info, orders):
             ]
         ];
         for order in orders:
-            body_table_data.append(ToParagraph_ForTable(order['Description'], order['Quantity'], order['Price'], order['Total']));
+            attributes = [];
+            for attribute in dir(order):
+                attributes.append(attribute);
+            body_table_data.append(
+                ToParagraph_ForTable(
+                    attributes
+                )
+            );
 
         body_table_style = TableStyle([
             ('BACKGROUND', (0, 0), (-1, 0), colors.whitesmoke),
@@ -131,30 +138,14 @@ def GeneratePdf(client_info, orders):
         print(f'Error generating PDF: {e}');
 
 
-def ToParagraph_ForTable(Description, Quantity, Price, Total):
+def ToParagraph_ForTable(elements: list):
     style = ParagraphStyle(
         name="Centered",
         parent=getSampleStyleSheet()['Normal'],
         fontName='Times-Roman',
         alignment=1 # 0=left, 1=center, 2=right
     );
-    return [
-        Paragraph(
-            f"{Description}"
-        ),
-        Paragraph(
-            f"{Quantity}", 
-            style
-        ),
-        Paragraph(
-            f"{Price}€", 
-            style
-        ),
-        Paragraph(
-            f"{Total}€", 
-            style
-        )
-    ];
+    return [ Paragraph(f"{element}") for element in elements];
 
 
 def DivideAndMergePages(pdf_vecchio, indici_pagine, directorySalvataggio, nomeFile):
