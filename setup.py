@@ -9,7 +9,7 @@ with open("requirements.txt") as f:
 
 setup(
     name='almax_common',
-    version=f"0.11.0-build{Time.now.strftime('%d%m%Y%H:%M:%S')}",
+    version=f"0.11.0-build{Time.now.strftime('%d%m%Y%H%M%S')}",
     description='A common library with some of my implementations',
     long_description=readMe,
     long_description_content_type='text/markdown',
