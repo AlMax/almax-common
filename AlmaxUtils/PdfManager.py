@@ -1,4 +1,4 @@
-import AlmaxUtils.Generic as Generic;
+import AlmaxUtils.Time as TimeLib;
 import os;
 import PyPDF2;
 
@@ -9,7 +9,7 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, Tabl
 
 def GeneratePdf(client_info, orders):
     try:
-        now = Generic.now();
+        now = TimeLib.now();
         now_month = now.month if now.month > 9 else f"0{now.month}";
         now_day = now.day if now.day > 9 else f"0{now.day}";
         now_hour = now.hour if now.hour > 9 else f"0{now.hour}";

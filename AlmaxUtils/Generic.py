@@ -38,7 +38,7 @@ def ReadFile(file_path: str) -> list:
     return lines;
 
 def isCodiceFiscale(parola):
-    """Data in input una stringa, viene analizzata la composizione della stringa per determinare se è un codice fiscale o meno.
+    """ - DA RIVEDERE - Data in input una stringa, viene analizzata la composizione della stringa per determinare se è un codice fiscale o meno.
     Ritorna True in caso sia un codice fiscale, False altrimenti. """
     trovato = False,parola
     if len(parola) > 16:
