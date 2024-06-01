@@ -1,4 +1,5 @@
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages;
+from AlmaxUtils import Time;
 
 with open("README.md", "r") as fh:
     readMe = fh.read();
@@ -8,7 +9,7 @@ with open("requirements.txt") as f:
 
 setup(
     name='almax_common',
-    version='0.10.2',
+    version=f"0.11.0-build{Time.now.strftime('%d%m%Y%H:%M:%S')}",
     description='A common library with some of my implementations',
     long_description=readMe,
     long_description_content_type='text/markdown',
