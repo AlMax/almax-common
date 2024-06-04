@@ -2,7 +2,10 @@ import tkinter as TK;
 from tkinter import ttk;
 from tkinter import messagebox;
 from tkcalendar import DateEntry;
+from datetime import datetime;
+import locale;
 import sys;
+from AlmaxUtils import Time as AUT;
 
 WindowElementsDefaultPaddingWidth = 10;
 WindowElementsDefaultPaddingHeight = 10;
@@ -58,14 +61,34 @@ class Window:
         WindowProgressionProgressbarRow.pack(in_=self.__Frames[frameName], side=TK.LEFT);
         return Progression;
 
-    def AddCalendarToFrame(self, frameName, position, defaultYear = 2024, defaultMoth = 1, defaultDay = 1):
+    def AddCalendarToFrame(
+            self, 
+            frameName, 
+            position, 
+            defaultDate: datetime = AUT.now, 
+            localeZone = 'it_IT',
+            showLabel: bool = False
+        ):
+        locale.setlocale(locale.LC_TIME, localeZone);
+        def update_label(event):
+            dateLabel.config(text=date_entry.get_date().strftime('%A %d %B %Y'));
+        
         date_entry = DateEntry(
             self.__Istance, 
-            year=defaultYear, 
-            month=defaultMoth, 
-            day=defaultDay
+            locale=localeZone, 
+            date_pattern='dd/mm/y',
+            selectmode="day",
+            year=defaultDate.year, 
+            month=defaultDate.month, 
+            day=defaultDate.day
         );
         date_entry.pack(in_=self.__Frames[frameName], side=position);
+
+        if showLabel:
+            dateLabel = self.AddLabelToFrame("",frameName, TK.RIGHT);
+            dateLabel.config(text=date_entry.get_date().strftime('%A %d %B %Y'));
+            date_entry.bind("<<DateEntrySelected>>", update_label);
+
         return date_entry;
 
     def DisableAllButtons(self):
