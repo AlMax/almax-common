@@ -1,6 +1,6 @@
 import logging;
 from datetime import datetime;
-import AlmaxUtils.Generic as Generic;
+import AlmaxUtils.Time as AUT;
 import os;
 
 class LoggerService:
@@ -34,20 +34,20 @@ class LoggerService:
         self.__CustomTimer = datetime.now();
 
     def EndTiming(self):
-        self.__Istance.info(f"\tDuration: {Generic.TimeToString(Generic.CalculateTimePassed(self.__CustomTimer))}");
+        self.__Istance.info(f"\tDuration: {AUT.TimeToString(AUT.CalculateTimePassed(self.__CustomTimer))}");
    
     def StartGenericTiming(self):
         self.__Timer = datetime.now();
 
     def ForceEnd(self):
-        self.__Istance.info(f"Total Duration: {Generic.TimeToString(Generic.CalculateTimePassed(self.__Timer))}");
+        self.__Istance.info(f"Total Duration: {AUT.TimeToString(AUT.CalculateTimePassed(self.__Timer))}");
         self.__Istance.info(f"FORCED END\n\n");
 
     def Start(self):
         self.__Istance.info(f"START");
 
     def End(self):
-        self.__Istance.info(f"Total Duration: {Generic.TimeToString(Generic.CalculateTimePassed(self.__Timer))}");
+        self.__Istance.info(f"Total Duration: {AUT.TimeToString(AUT.CalculateTimePassed(self.__Timer))}");
         self.__Istance.info(f"END\n\n");
 
     def LogPath(self) -> str:
