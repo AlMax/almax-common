@@ -1,7 +1,7 @@
 name: Build & Upload Python Package
 
 env:
-  Version: "1.0.6"
+  Version: "1.0.7"
   PyPiToken: ${{ secrets.PYPI_API_TOKEN }}
   PythonVersion: 3.12
 
