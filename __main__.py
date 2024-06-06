@@ -1,5 +1,6 @@
 from AlmaxGraphics import FrameManager as FM;
 from AlmaxUtils import Time as AUT;
+from AlmaxClasses import XmlManager as XM;
 import tkinter as TK;
 
 def AssignCommand(Button: TK.Button, index):

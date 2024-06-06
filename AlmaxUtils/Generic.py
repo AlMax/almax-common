@@ -57,3 +57,6 @@ def isCodiceFiscale(parola):
             return CFLib.isvalid(parola),parola
         return False,parola
     return trovato;
+
+def AllElementsHaveSameClass(array: list, cls) -> bool:
+    return all(isinstance(element, cls) for element in array);
