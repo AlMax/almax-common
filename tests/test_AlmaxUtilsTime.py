@@ -1,7 +1,7 @@
 import pytest;
 from datetime import datetime, timedelta;
 from unittest.mock import patch;
-from AlmaxUtils.Time import CalculateTimePassed, TimeToString, AddTime;
+from AlmaxUtils.Time import CalculateTimePassed, TimeToString, GetTimeDesired;
 
 @pytest.fixture
 def fixed_datetime():
@@ -23,10 +23,10 @@ def test_TimeToString():
     assert result == expected;
 
 def test_AddTime(fixed_datetime):
-    hours_to_add = 5
+    seconds_to_add = 5
     with patch('AlmaxUtils.Time.datetime') as mock_datetime:
         mock_datetime.now.return_value = fixed_datetime
         mock_datetime.side_effect = lambda *args, **kw: datetime(*args, **kw)
-        result = AddTime(hours_to_add)
-        expected = (fixed_datetime + timedelta(hours=hours_to_add)).strftime('%d-%m-%Y_%H:%M:%S')
+        result = GetTimeDesired(seconds_to_add, '%d-%m-%Y_%H:%M:%S')
+        expected = (fixed_datetime + timedelta(seconds=seconds_to_add)).strftime('%d-%m-%Y_%H:%M:%S')
         assert result == expected;

@@ -12,8 +12,8 @@ def TimeToString(time: datetime) -> str:
     days = hours // 24;
     return f"{round(days)} Days = {round(hours)} Hours = {round(minutes)} Minutes = {round(seconds, 2)} Seconds";
 
-def AddTime(Hours: int) -> str:
-    return (datetime.now() + timedelta(hours=Hours)).strftime('%d-%m-%Y_%H:%M:%S');
+def GetTimeDesired(AddSeconds: int = 0, Format = "%d-%m-%Y %H:%M:%S") -> str:
+    return (datetime.now() + timedelta(seconds=AddSeconds)).strftime(Format);
 
 def LastDayNameOccurence(day_name: str):
     # Dictionary to map day names to their respective numbers

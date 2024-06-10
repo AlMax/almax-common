@@ -7,9 +7,6 @@ class LoggerService:
     def __init__(self, programNameLogger: str, details: str = '', genericLogFileName: str = "__0.ExecutionLog.log", addTimeFolder: bool = True, logFormat: str = '%(asctime)s - %(message)s', absoluteLogPath: str = ''):
         self.__LogPath = f"{absoluteLogPath}{programNameLogger}{details}";
        
-        #if os.path.exists(self.__LogPath):
-        #    raise FileExistsError("Duplicate Executions are Denied!");
-        #else:
         if addTimeFolder:
             self.__LogPath += "/" + datetime.now().strftime("%Y%m%d_%H%M%S");
         if not (os.path.exists(self.__LogPath)):

@@ -10,14 +10,14 @@ def test_PrintBytes():
 
 @pytest.fixture
 def temp_file(tmp_path):
-    file_path = tmp_path / "temp_file.txt"
+    file_path = tmp_path / "temp_file.txt";
     with open(file_path, 'w') as f:
         f.write("Hello, this is a test file.\n")
         f.write("It contains multiple lines.\n")
         f.write("This is the target line.\n")
-    return file_path
+    return file_path;
 
-def test_checkstringinfile(temp_file):
+def test_CheckStringInFile(temp_file):
     assert CheckStringInFile(temp_file, "target line") == True
     assert CheckStringInFile(temp_file, "not in file") == False
     assert CheckStringInFile("nonexistent_file.txt", "target line") == False

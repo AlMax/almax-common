@@ -51,7 +51,7 @@ def HasFiles(folder: str) -> bool:
     files = os.listdir(folder);
     return len(files) > 0;
    
-def GetRobocopyCommand(source: str, elaboration: int = 8, operation:int = 0, onlyFiles=False, customFolder: str = '', checkIfExists: list = [], CalculateDestinationFolder: function = None) -> list:
+def GetRobocopyCommand(source: str, elaboration: int = 8, operation:int = 0, onlyFiles=False, customFolder: str = '', checkIfExists: list = [], CalculateDestinationFolder: callable = None) -> list:
     if CalculateDestinationFolder == None:
         return None;
     destination = lambda:CalculateDestinationFolder(source);
@@ -112,6 +112,13 @@ def GetHighestPaths(paths: list) -> list:
             highest_paths.append(path);
 
     return highest_paths;
+
+def CreateFolder(folderPath: str):
+    pathSplitted = CleanPath(folderPath, "/").split("/");
+    if "." in pathSplitted[-1]:
+        folderPath = "/".join(pathSplitted[:-1]);
+    if not (os.path.exists(folderPath)):
+        os.makedirs(folderPath);
 
 def FolderHasContent(folder: str) -> bool:
     if os.path.exists(folder) and os.listdir(folder):
