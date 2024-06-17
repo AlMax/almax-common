@@ -28,7 +28,7 @@ optional_dependencies = {
 }
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--library", action="append", help="Libraries Needed (comma-separated)")
+parser.add_argument("--feature", action="append", help="Libraries Needed (comma-separated)")
 args, unknown = parser.parse_known_args()
 libraries = args.library
 

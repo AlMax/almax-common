@@ -29,7 +29,7 @@ jobs:
         id: get_deps
         run: |
           # Execute setup.py to get the dynamically generated install_requires list
-          INSTALL_REQUIRES=$(python -c 'import json, setuptools, sys; sys.argv.extend(["-l", "All"]); print(json.dumps(setuptools.setup(name="almax_common")))')
+          INSTALL_REQUIRES=$(python -c 'import json, setuptools, sys; sys.argv.extend(["--feature", "All"]); print(json.dumps(setuptools.setup(name="almax_common")))')
       
           # Parse JSON string and extract install_requires
           INSTALL_REQUIRES=$(echo "$INSTALL_REQUIRES" | jq -r '.install_requires')
