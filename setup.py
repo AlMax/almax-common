@@ -1,5 +1,4 @@
 from setuptools import setup, find_packages;
-import argparse;
 
 with open("README.md", "r") as fh:
     readMe = fh.read();
@@ -13,7 +12,8 @@ with open("version.txt", "r") as fh:
 optional_dependencies = {
     "All": [],
     "Graphics": [
-        "tkcalendar==1.6.1"
+        "tkcalendar==1.6.1",
+        "Babel==2.15.0"
     ],
     "PdfManager": [
         "reportlab==4.2.0",
@@ -27,21 +27,6 @@ optional_dependencies = {
     ]
 }
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--feature", action="append", help="Libraries Needed (comma-separated)")
-args, unknown = parser.parse_known_args()
-libraries = args.library
-
-installRequiresCustom = required;
-if libraries:
-    for library in libraries:
-        if library in optional_dependencies:
-            if library == "All":
-                for lib,dep in optional_dependencies:
-                    installRequiresCustom.extend(dep);
-            else:
-                installRequiresCustom.extend(optional_dependencies[library]);
-
 setup(
     name='almax_common',
     version=versionFile,
@@ -52,5 +37,6 @@ setup(
     author_email='alihaider.maqsood@gmail.com',
     packages=find_packages(),
     package_dir={'': '.'},
-    install_requires=installRequiresCustom,
+    install_requires=[required],
+    extra_require=optional_dependencies
 );
