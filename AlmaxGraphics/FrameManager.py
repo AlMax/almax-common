@@ -25,7 +25,7 @@ class Window:
         self.__ButtonsToDisable = [];
         self.__RadioButtons = [];
    
-    def AddFrame(self, frameName, position):
+    def AddFrame(self, frameName, position=TK.NW):
         self.__Frames[frameName] = TK.Frame(self.__Istance);
         self.__Frames[frameName].pack(anchor=position);
    
