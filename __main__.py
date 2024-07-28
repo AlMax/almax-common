@@ -6,20 +6,31 @@ import tkinter as TK;
 def AssignCommand(Button: TK.Button, index):
     match(index):
         case 0:
-            print("Data", calendarDate.get_date());
+            #print("Data", calendarDate.get_date())
+            print("Option", option.get())
 
 def main():
+
     window = FM.Window("almax_common");
 
+    global option;
+
     window.AddFrame("first", TK.NW);
-    window.AddLabelToFrame("prova1", "first", TK.LEFT);
-    global calendarDate;
-    calendarDate = window.AddCalendarToFrame(
+    window.AddLabelToFrame("prova1", "first", TK.LEFT)
+    window.AddTextToFrame("first", TK.LEFT)
+    option = window.AddOptionButtonToFrame(
+        [str(i) for i in range(0, 101)],
         "first", 
-        TK.LEFT, 
-        showLabel=True,
-        defaultDate=AUT.LastDayNameOccurence("friday")
+        TK.LEFT
     );
+
+    global calendarDate;
+    # calendarDate = window.AddCalendarToFrame(
+    #    "first",
+    #    TK.LEFT,
+    #    showLabel=True,
+    #    defaultDate=AUT.LastDayNameOccurence("friday")
+    # );
 
     window.AddFrame("buttons", TK.S);
     window.AddButtonToFrame("Stampa", 0, AssignCommand, "buttons", TK.LEFT);

@@ -1,3 +1,16 @@
+class Payload:
+    def __init__(self, data: dict | list | str, log: dict):
+        self.__Data = data
+        self.__Log = log
+
+    @property
+    def First(self) -> str:
+        return self.Data[0] if type(self.Data) == list else "Not a list"
+
+    @property
+    def Data(self) -> dict | list:
+        return self.__Data
+
 class Result:
     def __init__(
         self,
@@ -21,20 +34,3 @@ class Result:
     @property
     def Payload(self) -> Payload:
         return self.__Payload;
-    
-class Payload:
-    def __init__(
-        self,
-        data: dict | list | str,
-        log: dict
-    ):
-        self.__Data = data;
-        self.__Log = log;
-
-    @property
-    def First(self) -> str:
-        return self.Data[0] if type(self.Data) == list else "Not a list";
-
-    @property
-    def Data(self) -> dict | list:
-        return self.__Data;

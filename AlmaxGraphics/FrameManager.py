@@ -28,6 +28,11 @@ class Window:
     def AddFrame(self, frameName, position=TK.NW):
         self.__Frames[frameName] = TK.Frame(self.__Istance);
         self.__Frames[frameName].pack(anchor=position);
+    
+    def AddTextToFrame(self, frameName: str, position, textName: str = ""):
+        WindowTextRow = WindowCreateText(self.__Istance, textName);
+        WindowTextRow.pack(in_=self.__Frames[frameName], side=position);
+        return WindowTextRow;
    
     def AddLabelToFrame(self, labelName: str, frameName: str, position):
         WindowLabelRow = WindowCreateLabel(self.__Istance, labelName);
@@ -50,6 +55,16 @@ class Window:
             rb.pack(in_=self.__Frames[frameName], side=position);
         self.__RadioButtons += WindowRadioButtonRow;
         return WindowRadioButtonRow;
+
+    def AddOptionButtonToFrame(self, Options: list, frameName, position) -> TK.StringVar:
+        selected = TK.StringVar(self.__Istance);
+        WindowOptions = WindowCreateOptionsButton(
+            self.__Istance,
+            Options,
+            selected
+        );
+        WindowOptions.pack(in_=self.__Frames[frameName], side=position);
+        return selected;
    
     def AddProgressbarToFrame(self, frameName):
         WindowProgressionProgressbarRow = WindowCreateProgressbar(self.__Istance);
@@ -166,6 +181,21 @@ def WindowCreateLabel(
     );
     return WindowLabel;
 
+def WindowCreateText(
+    Window: TK.Tk,
+    DefaultText: str = ""
+) -> TK.Label:
+    WindowText = TK.Text(
+        Window,
+        height=1, 
+        width=50,
+        padx=WindowElementsDefaultPaddingWidth,
+        pady=WindowElementsDefaultPaddingHeight
+    );
+    if DefaultText != "":
+        WindowText.insert(TK.END, DefaultText);
+    return WindowText;
+
 def WindowCreateButton(
     Window: TK.Tk,
     Text: str,
@@ -196,6 +226,18 @@ def WindowCreateRadioButton(
             width=WindowElementsDefaultPaddingWidth
         ));
     return radioButtons;
+
+def WindowCreateOptionsButton(
+    Window: TK.Tk,
+    Options: list,
+    SelectedOption: TK.StringVar
+):
+    optionsButton = ttk.OptionMenu(
+        Window,
+        SelectedOption,
+        *Options
+    );
+    return optionsButton;
 
 def WindowCreateProgressbar(
    Window: TK.Tk
