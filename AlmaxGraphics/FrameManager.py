@@ -34,7 +34,7 @@ class Window:
         WindowTextRow.pack(in_=self.__Frames[frameName], side=position);
         return WindowTextRow;
    
-    def AddLabelToFrame(self, labelName, frameName: str, position):
+    def AddLabelToFrame(self, labelName: str, frameName: str, position):
         WindowLabelRow = WindowCreateLabel(self.__Istance, labelName);
         WindowLabelRow.pack(in_=self.__Frames[frameName], side=position);
         return WindowLabelRow;
@@ -170,11 +170,11 @@ class ProgressbarProgression:
 
 def WindowCreateLabel(
     Window: TK.Tk,
-    Text
+    Text: str
 ) -> TK.Label:
     WindowLabel = TK.Label(
         Window,
-        textvariable=Text,
+        text=Text,
         padx=WindowElementsDefaultPaddingWidth,
         pady=WindowElementsDefaultPaddingHeight,
         anchor=TK.W
