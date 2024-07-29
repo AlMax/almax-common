@@ -8,7 +8,7 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
 
 
-def GeneratePdf(client_info, orders):
+def GeneratePdf(client_info, orders) -> str:
     now = TimeLib.now
     now_month = now.month if now.month > 9 else f"0{now.month}"
     now_day = now.day if now.day > 9 else f"0{now.day}"
@@ -101,11 +101,11 @@ def GeneratePdf(client_info, orders):
             order["Price"], 
             order["Total"]
         ];
-        #for attribute in dir(order):
-            #if not attribute.startswith("__") and not callable(
-                #getattr(order, attribute)
-            #):
-                #attributes.append(getattr(order, attribute))
+        # for attribute in dir(order):
+        # if not attribute.startswith("__") and not callable(
+        # getattr(order, attribute)
+        # ):
+        # attributes.append(getattr(order, attribute))
         body_table_data.append(ToParagraph_ForTable(attributes))
 
     body_table_style = TableStyle(
@@ -128,7 +128,7 @@ def GeneratePdf(client_info, orders):
     # Build the PDF
     doc.build(content)
 
-    print(f"PDF generated successfully at: {file_path}")
+    return file_path
     # try:
     # except Exception as e:
     #    print(f'Error generating PDF: {e}');
