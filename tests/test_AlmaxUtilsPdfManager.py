@@ -7,7 +7,10 @@ class Order:
         self.Description = description;
         self.Quantity = "{:,.1f}".format(quantity);
         self.Price = "{:,.2f}".format(price);
-        self.Total = "{:,.2f}".format(quantity * price);
+        self.Total = "{:,.2f}".format(quantity * price)
+
+    def ToDict(self):
+        return vars(self)
 
 def test_GeneratePdf():
     now = TimeLib.now;
@@ -17,7 +20,7 @@ def test_GeneratePdf():
     now_minute = now.minute if now.minute > 9 else f"0{now.minute}";
     now_second = now.second if now.second > 9 else f"0{now.second}";
     file_path = f"{now.year}/{now_month}/{now_day}_{now_hour}{now_minute}{now_second}.pdf";
-    
+
     client_info = {
         "name": "Ali Srls"
     };
@@ -29,5 +32,5 @@ def test_GeneratePdf():
         Order('fbewkjfbwebfjewbfkjewbfkewfewfvjewbfjwebfjkewjfbewfjwebjfwejfjwebfjewbfjwefwebfwefweeffwe', 2.6, 34.5)
     ];
 
-    GeneratePdf(client_info, Order, orders);
-    assert os.path.exists(file_path);
+    GeneratePdf(client_info, [order.ToDict() for order in orders]);
+    assert os.path.exists(file_path)
