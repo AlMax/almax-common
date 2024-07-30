@@ -24,17 +24,26 @@ class Window:
         self.__Frames = {};
         self.__ButtonsToDisable = [];
         self.__RadioButtons = [];
+    
+    def AddValidation(self, validation) -> tuple:
+        vcmd = (self.__Istance.register(validation), '%P');
+        return vcmd;
    
     def AddFrame(self, frameName, position=TK.NW):
         self.__Frames[frameName] = TK.Frame(self.__Istance);
         self.__Frames[frameName].pack(anchor=position);
     
-    def AddTextToFrame(self, frameName: str, position, textName: str = ""):
+    def AddTextToFrame(self, frameName: str, position, textName: str = "") -> TK.Text:
         WindowTextRow = WindowCreateText(self.__Istance, textName);
         WindowTextRow.pack(in_=self.__Frames[frameName], side=position);
         return WindowTextRow;
+
+    def AddEntryToFrame(self, frameName: str, position, textName: str = "") -> TK.Entry:
+        WindowTextRow = WindowCreateEntry(self.__Istance, textName);
+        WindowTextRow.pack(in_=self.__Frames[frameName], side=position);
+        return WindowTextRow;
    
-    def AddLabelToFrame(self, labelName: str, frameName: str, position):
+    def AddLabelToFrame(self, labelName: str, frameName: str, position) -> TK.Label:
         WindowLabelRow = WindowCreateLabel(self.__Istance, labelName);
         WindowLabelRow.pack(in_=self.__Frames[frameName], side=position);
         return WindowLabelRow;
@@ -49,7 +58,7 @@ class Window:
             WindowButtonRow['width'] = len(WindowButtonRow['text'])-5;
         return WindowButtonRow;
 
-    def AddRadioButtonToFrame(self, WindowRadioButtonOptions, WindowRadioButtonSelected, frameName, position):
+    def AddRadioButtonToFrame(self, WindowRadioButtonOptions, WindowRadioButtonSelected, frameName, position) -> list:
         WindowRadioButtonRow = WindowCreateRadioButton(self.__Istance, WindowRadioButtonOptions, WindowRadioButtonSelected);
         for rb in WindowRadioButtonRow:
             rb.pack(in_=self.__Frames[frameName], side=position);
@@ -184,7 +193,7 @@ def WindowCreateLabel(
 def WindowCreateText(
     Window: TK.Tk,
     DefaultText: str = ""
-) -> TK.Label:
+) -> TK.Text:
     WindowText = TK.Text(
         Window,
         height=1, 
@@ -194,6 +203,15 @@ def WindowCreateText(
     );
     if DefaultText != "":
         WindowText.insert(TK.END, DefaultText);
+    return WindowText;
+
+def WindowCreateEntry(
+    Window: TK.Tk,
+    DefaultText: str = ""
+) -> TK.Entry:
+    WindowText = TK.Entry(
+        Window
+    );
     return WindowText;
 
 def WindowCreateButton(

@@ -32,5 +32,14 @@ def test_GeneratePdf():
         Order('fbewkjfbwebfjewbfkjewbfkewfewfvjewbfjwebfjkewjfbewfjwebjfwejfjwebfjewbfjwefwebfwefweeffwe', 2.6, 34.5)
     ];
 
-    GeneratePdf(client_info, [order.ToDict() for order in orders]);
+    GeneratePdf(
+        client_info,
+        [order.ToDict() for order in orders],
+        [
+            {"text": "TOTALE SENZA IVA", "value": f"{10}€"},
+            {"text": "IVA al 22%", "value": f"{100}€"},
+            {"text": "TOTALE CON IVA", "value": f"{20}€"},
+        ],
+        [f"NB: Qualsiasi modifica che non è citata, sarà pagata a parte."],
+    )
     assert os.path.exists(file_path)

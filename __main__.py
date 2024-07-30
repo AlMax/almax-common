@@ -24,8 +24,20 @@ def AssignCommand(Button: TK.Button, index):
 def main():
     global option;
 
+    def validate_input(value):
+        if value == "":
+            return True
+        elif all(char.isdigit() or char == ',' or char =="." for char in value):
+            return True
+        else:
+            return False
+
     window.AddFrame("first", TK.NW);
-    window.AddLabelToFrame(total, "first", TK.LEFT)
+    window.AddLabelToFrame(total.get(), "first", TK.LEFT)
+    window.AddEntryToFrame("first", TK.LEFT).config(
+        validate="key", 
+        validatecommand=window.AddValidation(validate_input)
+    )
     window.AddTextToFrame("first", TK.LEFT)
     option = window.AddOptionButtonToFrame(
         [str(i) for i in range(0, 101)],

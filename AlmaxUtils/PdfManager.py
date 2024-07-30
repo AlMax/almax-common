@@ -8,7 +8,7 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
 
 
-def GeneratePdf(client_info, orders) -> str:
+def GeneratePdf(client_info, orders, totalObj, finalText: list) -> str:
     now = TimeLib.now
     now_month = now.month if now.month > 9 else f"0{now.month}"
     now_day = now.day if now.day > 9 else f"0{now.day}"
@@ -93,21 +93,15 @@ def GeneratePdf(client_info, orders) -> str:
 
     content.append(Spacer(1, 10))  # Aggiungi spaziatura
 
-    body_table_data = [["Descrizione", "Quantità", "Prezzo", "Totale (no IVA)"]]
+    body_table_data = [["Descrizione", "Quantità", "Prezzo €", "Totale € (no IVA)"]]
     for order in orders:
         attributes = [
-            order["Description"], 
+            order["Description"],
             order["Quantity"],
-            order["Price"], 
-            order["Total"]
-        ];
-        # for attribute in dir(order):
-        # if not attribute.startswith("__") and not callable(
-        # getattr(order, attribute)
-        # ):
-        # attributes.append(getattr(order, attribute))
+            order["Price"],
+            order["Total"],
+        ]
         body_table_data.append(ToParagraph_ForTable(attributes))
-
     body_table_style = TableStyle(
         [
             ("BACKGROUND", (0, 0), (-1, 0), colors.whitesmoke),
@@ -118,12 +112,82 @@ def GeneratePdf(client_info, orders) -> str:
             ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
         ]
     )
-    body_table = Table(body_table_data, colWidths=[370, 48, 60, 80])
+    body_table = Table(body_table_data, colWidths=[368, 48, 60, 82])
     body_table.setStyle(body_table_style)
     content.append(body_table)
 
+    table_data = [["", ""]]
+    styleIva = ParagraphStyle(
+        name="Centered1",
+        parent=getSampleStyleSheet()["Normal"],
+        fontName="Times-Roman",
+        alignment=0,  # 0=left, 1=center, 2=right
+    )
+    styleIvaPrice = ParagraphStyle(
+        name="Centered2",
+        parent=getSampleStyleSheet()["Normal"],
+        fontName="Helvetica",
+        alignment=0,  # 0=left, 1=center, 2=right
+    )
+    noIva = [
+        Paragraph(totalObj[0]["text"], styleIva),
+        Paragraph(totalObj[0]["value"], styleIvaPrice),
+    ]
+    iva = [
+        Paragraph(totalObj[1]["text"], styleIva),
+        Paragraph(totalObj[1]["value"], styleIvaPrice),
+    ]
+    totale = [
+        Paragraph(
+            totalObj[2]["text"],
+            ParagraphStyle(
+                name="Centered1",
+                parent=getSampleStyleSheet()["Normal"],
+                fontName="Times-Bold",
+                alignment=0,  # 0=left, 1=center, 2=right
+            ),
+        ),
+        Paragraph(
+            totalObj[2]["value"],
+            ParagraphStyle(
+                name="Centered2",
+                parent=getSampleStyleSheet()["Normal"],
+                fontName="Helvetica-Bold",
+                alignment=0,  # 0=left, 1=center, 2=right
+            ),
+        ),
+    ]
+    table_data.append(noIva)
+    table_data.append(iva)
+    table_data.append(totale)
+    table = Table(table_data, [115, 75])
+    table.setStyle(
+        TableStyle(
+            [
+                ("ALIGN", (0, 0), (-1, -1), "LEFT"),  # Align all cells to the left
+                ("ALIGN", (0, 0), (-1, 0), "CENTER"),  # Center header text
+                ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),  # Center text vertically
+                # ("GRID", (0, 0), (-1, -1), 1, colors.black),
+            ]
+        )
+    )
+    content.append(table)
+
     content.append(Spacer(1, 12))  # Aggiungi spaziatura
-    content.append(Paragraph("Il tuo testo qui", styles["Normal"]))
+
+    for text in finalText:
+        content.append(
+            Paragraph(
+                text,
+                ParagraphStyle(
+                    name="Centered",
+                    parent=getSampleStyleSheet()["Normal"],
+                    fontName="Times-Bold",
+                    alignment=1,  # 0=left, 1=center, 2=right
+                    textColor=colors.red,
+                ),
+            )
+        )
 
     # Build the PDF
     doc.build(content)
@@ -134,13 +198,15 @@ def GeneratePdf(client_info, orders) -> str:
     #    print(f'Error generating PDF: {e}');
 
 
-def ToParagraph_ForTable(elements: list):
+def ToParagraph_ForTable(elements: list, setStyle=False):
     style = ParagraphStyle(
-        name="Centered",
+        name="Centered1",
         parent=getSampleStyleSheet()["Normal"],
         fontName="Times-Roman",
-        alignment=1,  # 0=left, 1=center, 2=right
+        alignment=0,  # 0=left, 1=center, 2=right
     )
+    if setStyle:
+        return [Paragraph(f"{element}", style) for element in elements]
     return [Paragraph(f"{element}") for element in elements]
 
 
@@ -192,4 +258,4 @@ def MergePDFs(nome_pdf1, nome_pdf2, directorySalvataggio):
     os.rename(
         directorySalvataggio + "/pdfUnito.pdf",
         directorySalvataggio + "/" + nome_pdf1 + ".pdf",
-    );
+    )
