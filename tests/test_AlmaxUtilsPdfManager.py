@@ -19,7 +19,7 @@ def test_GeneratePdf():
     now_hour = now.hour if now.hour > 9 else f"0{now.hour}";
     now_minute = now.minute if now.minute > 9 else f"0{now.minute}";
     now_second = now.second if now.second > 9 else f"0{now.second}";
-    file_path = f"{now.year}/{now_month}/{now_day}_{now_hour}{now_minute}{now_second}.pdf";
+    file_path = f"Test/{now.year}/{now_month}/{now_day}_{now_hour}{now_minute}{now_second}.pdf";
 
     client_info = {
         "name": "Ali Srls"
