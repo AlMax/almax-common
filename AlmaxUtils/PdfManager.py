@@ -8,7 +8,7 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
 
 
-def GeneratePdf(client_info, orders, totalObj, finalText: list) -> str:
+def GeneratePdf(client_info, orders, totalObj, finalText: list, documentType: str) -> str:
     now = TimeLib.now
     now_month = now.month if now.month > 9 else f"0{now.month}"
     now_day = now.day if now.day > 9 else f"0{now.day}"
@@ -47,7 +47,7 @@ def GeneratePdf(client_info, orders, totalObj, finalText: list) -> str:
                     fontSize=12,
                 ),
             ),
-            "Preventivo",
+            documentType,
         ],
         ["", ""],
         [
@@ -59,7 +59,15 @@ def GeneratePdf(client_info, orders, totalObj, finalText: list) -> str:
                     fontName="Times-Roman",
                 ),
             ),
-            f"Spettabile {client_info}",
+            Paragraph(
+                f"Spettabile {client_info}",
+                ParagraphStyle(
+                    name="Centered1",
+                    parent=getSampleStyleSheet()["Normal"],
+                    fontName="Times-Bold",
+                    alignment=1,  # 0=left, 1=center, 2=right
+                ),
+            ),
         ],
         [
             Paragraph(
