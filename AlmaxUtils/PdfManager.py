@@ -16,11 +16,10 @@ def GeneratePdf(client_info, orders, totalObj, finalText: list, documentType: st
     now_minute = now.minute if now.minute > 9 else f"0{now.minute}"
     now_second = now.second if now.second > 9 else f"0{now.second}"
 
-    file_path = f"{now.year}/{now_month}"
+    file_path = f"{documentType}/{now.year}/{now_month}"
     if not os.path.exists(file_path):
         os.makedirs(file_path)
     file_path = f"{file_path}/{now_day}_{now_hour}{now_minute}{now_second}.pdf"
-    # file_path = "test.pdf";
 
     size_societyName = 25
     margin = 10
