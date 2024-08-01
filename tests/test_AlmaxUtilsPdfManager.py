@@ -41,5 +41,6 @@ def test_GeneratePdf():
             {"text": "TOTALE CON IVA", "value": f"{20}€"},
         ],
         [f"NB: Qualsiasi modifica che non è citata, sarà pagata a parte."],
+        "Test"
     )
     assert os.path.exists(file_path)
